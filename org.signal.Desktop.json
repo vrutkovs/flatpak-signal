@@ -1,0 +1,82 @@
+{
+    "app-id": "org.signal.Desktop",
+    "base": "io.atom.electron.BaseApp",
+    "base-version": "master",
+    "runtime": "org.freedesktop.Platform",
+    "runtime-version": "1.4",
+    "sdk": "org.freedesktop.Sdk",
+    "command": "signal",
+    "tags": ["nightly"],
+    "desktop-file-name-prefix": "(Nightly) ",
+    "finish-args": [
+        "--device=dri",
+        "--share=ipc",
+        "--share=network",
+        "--socket=pulseaudio",
+        "--socket=x11",
+        "--socket=wayland"
+    ],
+    "modules": [
+        {
+            "name": "nodejs",
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://nodejs.org/dist/v7.5.0/node-v7.5.0.tar.xz",
+                    "path": "node.tar.xz",
+                    "sha256": "f99ee74647fe223eb03f2dd1dc6acdc14d9a881621376c848236c8d2ac8afd03"
+                }
+            ]
+        },
+        {
+            "name": "nwjs",
+            "no-autogen": true,
+            "build-options": {
+                "strip": false,
+                "no-debuginfo": true
+            },
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://dl.nwjs.io/v0.20.1/nwjs-sdk-v0.20.1-linux-x64.tar.gz",
+                    "path": "nwjs.tar.xz",
+                    "sha256": "d0ddedadfb31c99db26b7b79770d0664ddecaeb05dbc85b199af8efa1abd2941"
+                },
+                {
+                    "path": "nwjs-Makefile",
+                    "type": "file",
+                    "dest-filename": "Makefile"
+                }
+            ]
+        },
+        {
+            "name": "signal",
+            "no-autogen": true,
+            "build-options": {
+                "build-args": [
+                    "--share=network"
+                ]
+            },
+            "sources": [
+                {
+                    "type": "git",
+                    "url": "https://github.com/WhisperSystems/Signal-Desktop.git",
+                    "branch": "v0.28.0"                
+                },
+                {
+                    "path": "signal-Makefile",
+                    "type": "file",
+                    "dest-filename": "Makefile"
+                },
+                {
+                    "path": "signal.desktop",
+                    "type": "file"
+                },
+                {
+                    "path": "gemrc",
+                    "type": "file"
+                }
+            ]
+        }
+    ]
+}

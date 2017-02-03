@@ -1,0 +1,7 @@
+all:
+
+install:
+	mkdir -p /app/share/signal
+	mv * /app/share/signal
+
+.PHONY: all install
