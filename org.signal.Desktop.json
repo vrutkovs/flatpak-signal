@@ -41,9 +41,9 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "http://dl.nwjs.io/v0.17.3/nwjs-sdk-v0.17.3-linux-x64.tar.gz",
+                    "url": "http://dl.nwjs.io/v0.20.2/nwjs-sdk-v0.20.2-linux-x64.tar.gz",
                     "path": "nwjs.tar.xz",
-                    "sha256": "0a75f083ccc312024b6d257823a8cbe8b87cb7e47a3b2c623654849e71e77955"
+                    "sha256": "b61b2cf49bb63aacbddd36257fb70f1a4a35fcfc1aa256c923aff92b5b8eabe8"
                 },
                 {
                     "path": "nwjs-Makefile",
