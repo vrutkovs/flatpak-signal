@@ -3,7 +3,7 @@ all: install-deps build prune install-repo
 
 install-deps:
 	flatpak --user remote-add --if-not-exists --from gnome-nightly https://sdk.gnome.org/gnome.flatpakrepo
-	flatpak --user install gnome-nightly org.freedesktop.Platform/x86_64/1.4 org.freedesktop.Sdk/x86_64/1.4 || true
+	flatpak --user install gnome-nightly org.freedesktop.Platform/x86_64/1.6 org.freedesktop.Sdk/x86_64/1.6 || true
 
 build-electron-base:
 	cd electron-flatpak-base-app;\
