@@ -1,13 +1,16 @@
 {
     "app-id": "org.signal.Desktop",
     "base": "io.atom.electron.BaseApp",
-    "base-version": "master",
+    "base-version": "lts",
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "1.6",
     "sdk": "org.freedesktop.Sdk",
-    "command": "signal",
+    "command": "signal-desktop-beta",
     "tags": ["nightly"],
-    "desktop-file-name-prefix": "(Nightly) ",
+    "desktop-file-name-prefix": "(Flatpak) ",
+    "rename-desktop-file": "signal-desktop-beta.desktop",
+    "rename-icon": "signal-desktop-beta",
+    "separate-locales": false,
     "finish-args": [
         "--device=dri",
         "--share=ipc",
@@ -15,75 +18,79 @@
         "--socket=pulseaudio",
         "--socket=x11",
         "--socket=wayland",
-        /* Needed for dconf to work */
-        "--filesystem=xdg-run/dconf", "--filesystem=~/.config/dconf:ro",
-        "--talk-name=ca.desrt.dconf", "--env=DCONF_USER_CONFIG_DIR=.config/dconf",
-        /* Secrets */
         "--talk-name=org.freedesktop.secrets",
-        /* gconf */
-        "--talk-name=org.gnome.GConf"
+        "--talk-name=org.freedesktop.Notifications"
     ],
     "modules": [
-        {
-            "name": "nodejs",
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://nodejs.org/dist/v7.5.0/node-v7.5.0.tar.xz",
-                    "path": "node.tar.xz",
-                    "sha256": "f99ee74647fe223eb03f2dd1dc6acdc14d9a881621376c848236c8d2ac8afd03"
-                }
-            ]
-        },
-        {
-            "name": "nwjs",
-            "no-autogen": true,
-            "build-options": {
-                "strip": false,
-                "no-debuginfo": true
+      {
+          "name": "signal",
+          "buildsystem": "simple",
+          "build-commands": [
+            "ar x signal.deb",
+            "tar xvf data.tar.xz",
+            "mkdir -p /app/share/signal",
+            "cp -rvf ./opt/Signal\\ Beta/* /app/share/signal",
+            "cp -rvf ./usr/* /app",
+            "install -Dm744 signal-desktop-beta /app/bin",
+            "desktop-file-edit --set-icon=org.signal.Desktop /app/share/applications/signal-desktop-beta.desktop",
+            "desktop-file-edit --set-key=Exec --set-value='/app/bin/signal-desktop-beta %F' /app/share/applications/signal-desktop-beta.desktop"
+          ],
+          "sources": [
+            {
+              "type": "file",
+              "url": "https://updates.signal.org/desktop/apt/pool/main/s/signal-desktop-beta/signal-desktop-beta_1.0.35-beta.1_amd64.deb",
+              "sha256": "e2a0ec96092c96cf9e7e19ed750562710b5129641b6f0d3a49bdf058fdc47aeb",
+              "dest-filename": "signal.deb"
             },
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "http://dl.nwjs.io/v0.21.3/nwjs-sdk-v0.21.3-linux-x64.tar.gz",
-                    "path": "nwjs.tar.xz",
-                    "sha256": "e7f9d6c0b94f2703ba21c90e934abdad8542b546414d452f3dfa796fbdd229d2"
-                },
-                {
-                    "path": "nwjs-Makefile",
-                    "type": "file",
-                    "dest-filename": "Makefile"
-                }
-            ]
-        },
-        {
-            "name": "signal",
-            "no-autogen": true,
-            "build-options": {
-                "build-args": [
-                    "--share=network"
+            {
+                "type": "script",
+                "dest-filename": "signal-desktop-beta",
+                "commands": [
+                  "exec /app/share/signal/signal-desktop-beta \"$@\""
+                ]
+            }
+          ],
+          "modules": [
+            {
+                "name": "libsecret",
+                "config-opts": [
+                    "--disable-manpages",
+                    "--disable-gtk-doc",
+                    "--disable-static",
+                    "--disable-introspection"
+                ],
+                "cleanup": [
+                    "/bin",
+                    "/include",
+                    "/lib/pkgconfig",
+                    "/share/gtk-doc",
+                    "*.la"
+                ],
+                "sources": [
+                    {
+                        "type": "archive",
+                        "url": "http://ftp.gnome.org/pub/GNOME/sources/libsecret/0.18/libsecret-0.18.5.tar.xz",
+                        "sha256": "9ce7bd8dd5831f2786c935d82638ac428fa085057cc6780aba0e39375887ccb3"
+                    },
+                    {
+                        "type": "shell",
+                        "commands": ["autoreconf -f"]
+                    }
                 ]
             },
-            "sources": [
+            {
+              "name": "xkbfile",
+              "cleanup": ["/include", "/lib/*.la", "/lib/pkgconfig"],
+              "config-opts": ["--disable-static"],
+              "sources": [
                 {
-                    "type": "git",
-                    "url": "https://github.com/WhisperSystems/Signal-Desktop.git",
-                    "branch": "v0.33.0"                
-                },
-                {
-                    "path": "signal-Makefile",
-                    "type": "file",
-                    "dest-filename": "Makefile"
-                },
-                {
-                    "path": "signal.desktop",
-                    "type": "file"
-                },
-                {
-                    "path": "gemrc",
-                    "type": "file"
+                  "type": "archive",
+                  "url": "https://www.x.org/releases/individual/lib/libxkbfile-1.0.9.tar.bz2",
+                  "sha256": "51817e0530961975d9513b773960b4edd275f7d5c72293d5a151ed4f42aeb16a"
                 }
-            ]
-        }
-    ]
+              ]
+            }
+          ]
+      }
+  ]
 }

@@ -1,3 +1,0 @@
-[submodule "electron-flatpak-base-app"]
-	path = electron-flatpak-base-app
-	url = https://github.com/endlessm/electron-flatpak-base-app.git

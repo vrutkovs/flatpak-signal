@@ -1,6 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Signal
-Icon=org.signal.Desktop
-Exec=/app/bin/signal
-Categories=Network;
