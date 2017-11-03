@@ -1,0 +1,8 @@
+[Flatpak Ref]
+Title=Unofficial Signal builds
+Name=org.signal.Desktop
+Branch=master
+Url=https://vrutkovs.github.io/flatpak-signal/repo
+IsRuntime=False
+RuntimeRepo=https://flathub.org/repo/flathub.flatpakrepo
+Comment=Signal Desktop

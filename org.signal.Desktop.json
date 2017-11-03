@@ -1,7 +1,7 @@
 {
     "app-id": "org.signal.Desktop",
     "base": "io.atom.electron.BaseApp",
-    "base-version": "lts",
+    "base-version": "master",
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "1.6",
     "sdk": "org.freedesktop.Sdk",
