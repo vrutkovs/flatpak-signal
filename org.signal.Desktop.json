@@ -5,11 +5,11 @@
     "runtime": "org.freedesktop.Platform",
     "runtime-version": "1.6",
     "sdk": "org.freedesktop.Sdk",
-    "command": "signal-desktop-beta",
+    "command": "signal-desktop",
     "tags": ["nightly"],
     "desktop-file-name-prefix": "(Flatpak) ",
-    "rename-desktop-file": "signal-desktop-beta.desktop",
-    "rename-icon": "signal-desktop-beta",
+    "rename-desktop-file": "signal-desktop.desktop",
+    "rename-icon": "signal-desktop",
     "separate-locales": false,
     "finish-args": [
         "--device=dri",
@@ -29,24 +29,24 @@
             "ar x signal.deb",
             "tar xvf data.tar.xz",
             "mkdir -p /app/share/signal",
-            "cp -rvf ./opt/Signal\\ Beta/* /app/share/signal",
+            "cp -rvf ./opt/Signal/* /app/share/signal",
             "cp -rvf ./usr/* /app",
-            "install -Dm744 signal-desktop-beta /app/bin",
-            "desktop-file-edit --set-icon=org.signal.Desktop /app/share/applications/signal-desktop-beta.desktop",
-            "desktop-file-edit --set-key=Exec --set-value='/app/bin/signal-desktop-beta %F' /app/share/applications/signal-desktop-beta.desktop"
+            "install -Dm744 signal-desktop /app/bin",
+            "desktop-file-edit --set-icon=org.signal.Desktop /app/share/applications/signal-desktop.desktop",
+            "desktop-file-edit --set-key=Exec --set-value='/app/bin/signal-desktop %F' /app/share/applications/signal-desktop.desktop"
           ],
           "sources": [
             {
               "type": "file",
-              "url": "https://updates.signal.org/desktop/apt/pool/main/s/signal-desktop-beta/signal-desktop-beta_1.0.35-beta.1_amd64.deb",
-              "sha256": "e2a0ec96092c96cf9e7e19ed750562710b5129641b6f0d3a49bdf058fdc47aeb",
+              "url": "https://updates.signal.org/desktop/apt/pool/main/s/signal-desktop/signal-desktop_1.0.35_amd64.deb",
+              "sha256": "d9f9d4d54f4121efc8eadf1cf0ff957828088b313e53b66dc540b851c44c1860",
               "dest-filename": "signal.deb"
             },
             {
                 "type": "script",
-                "dest-filename": "signal-desktop-beta",
+                "dest-filename": "signal-desktop",
                 "commands": [
-                  "exec /app/share/signal/signal-desktop-beta \"$@\""
+                  "exec /app/share/signal/signal-desktop \"$@\""
                 ]
             }
           ],
